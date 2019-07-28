@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load socialaccount %}
+{% providers_media_js %}
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -20,11 +22,7 @@
         .main-photo {
             width: 100%;
         }
-
-        .post{
-
-        }
-
+        
         .box {
             margin-bottom: 20px;
         }
@@ -32,6 +30,42 @@
 </head>
 
 <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" >Polaroiding my life</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                </li>
+                {%if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Posting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{user.username}} is now on
+                        page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/signup">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% provider_login_url 'google' %}">Sign in</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
     <!-- main photo -->
     <div class="main">
         <a href="{% url 'home' %}">
@@ -39,17 +73,17 @@
         </a>
     </div>
     <div class="container col-8 post">
-            {% for post in post.all %}
-            <div class="box">
-                <div class="card" style="width: 100%;">
-                    <img src="{{post.image.url}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.title}}</h5>
-                        <p class="card-text">{{post.content}}</p>
-                    </div>
+        {% for post in post.all %}
+        <div class="box">
+            <div class="card" style="width: 100%;">
+                <img src="{{post.image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.content}}</p>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
     </div>
 
 
