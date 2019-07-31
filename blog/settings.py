@@ -11,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'dz*ezlj1m_zbmj$+2p55yz-^b0pz1llxg14@f)d0*fn1hg-$px'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['myblog.76iregdvhw.us-west-2.elasticbeanstalk.com']
 # 'django-env.2cbes7c2m8.us-west-2.elasticbeanstalk.com'
 
 # Application definition
@@ -21,20 +21,12 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogapp',
-
-    # allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    # provider
-    'allauth.socialaccount.providers.google',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +44,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'blog/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,17 +116,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
-
-AUTHENTICATION_BACKENDS = (
-
-    # Needed to login by username in Django admin, regardless of 'allauth'
-    'django.contrib.auth.backends.ModelBackend',
-
-    # 'allauth' specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-)
-
-SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
